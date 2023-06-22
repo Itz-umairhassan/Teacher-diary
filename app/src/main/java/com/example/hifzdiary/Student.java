@@ -4,11 +4,38 @@ import android.media.Image;
 
 public class Student {
 
+    private int id;
     private String student_name;
     private String student_roll;
    private  String student_class;
-   private Image student_image;
+   private int student_image_id;
 
+public Student(){}
+
+    public Student(int id,String name,String roll,String clas,int iid){
+    this.id=id;
+    this.student_image_id=iid;
+    this.student_class=clas;
+    this.student_roll=roll;
+    this.student_name=name;
+
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setStudent_image_id(int student_image_id) {
+        this.student_image_id = student_image_id;
+    }
+
+    public int getStudent_image_id() {
+        return student_image_id;
+    }
 
     public void setStudent_class(String student_class) {
         this.student_class = student_class;
@@ -22,9 +49,6 @@ public class Student {
         this.student_roll = student_roll;
     }
 
-    public void setStudent_image(Image student_image) {
-        this.student_image = student_image;
-    }
 
     public String getStudent_name() {
         return student_name;
@@ -38,7 +62,4 @@ public class Student {
         return student_class;
     }
 
-    public Image getStudent_image() {
-        return student_image;
-    }
 }

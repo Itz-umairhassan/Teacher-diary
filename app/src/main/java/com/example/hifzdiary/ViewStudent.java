@@ -1,19 +1,27 @@
 package com.example.hifzdiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ViewStudent extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    List<Student>ll=new ArrayList<>();
+    DBHandler studenDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,30 +29,27 @@ public class ViewStudent extends AppCompatActivity {
 
         try {
 
-            Student s1 = new Student();
-            s1.setStudent_class("Third");
-            s1.setStudent_name("umair");
-            s1.setStudent_roll("908");
+            studenDB=new DBHandler(ViewStudent.this);
 
-            Student s2 = new Student();
-            s2.setStudent_class("Third99");
-            s2.setStudent_name("umair2.0");
-            s2.setStudent_roll("90899");
+            Student s1=new Student(0,"umair","3456","first",R.drawable.d);
+            Student s2=new Student(0,"umair2.0","3456","first",R.drawable.d);
 
-            ArrayList<Student> li = new ArrayList<>();
+           //ll.add(s1);ll.add(s2);
+          //  ll.addAll(Arrays.asList(new Student()[]{s1,s2}));
+            /*Toast.makeText(this, "Ok i am view student", Toast.LENGTH_SHORT).show();*/
 
-            li.add(s1);
-            li.add(s2);
-            Toast.makeText(this, "Ok i am view student", Toast.LENGTH_SHORT).show();
+            ll=studenDB.getStudents();
 
-            /*recyclerView=findViewById(R.id.recylerViewStudent);
+            recyclerView=findViewById(R.id.recylerViewStudent);
+
+            recyclerView.addOnItemTouchListener(new Re);
             recyclerView.setHasFixedSize(true);
 
             layoutManager=new LinearLayoutManager(ViewStudent.this);
             recyclerView.setLayoutManager(layoutManager);
 
-            adapter=new studentAdapter(li);
-            recyclerView.setAdapter(adapter);*/
+            adapter=new studentAdapter(ll);
+            recyclerView.setAdapter(adapter);
 
         }catch(Exception ex){
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();

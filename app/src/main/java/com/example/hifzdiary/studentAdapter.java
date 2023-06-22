@@ -34,7 +34,7 @@ public class studentAdapter extends RecyclerView.Adapter<studentAdapter.MyVH> {
         holder.textViewName.setText(holder.data.getStudent_name());
         holder.textViewRoll.setText(holder.data.getStudent_roll());
         holder.textViewClass.setText(holder.data.getStudent_class());
-       // holder.student_image.setImageResource(R);
+       holder.student_image.setImageResource(holder.data.getStudent_image_id());
     }
 
     @Override
@@ -52,10 +52,10 @@ public class studentAdapter extends RecyclerView.Adapter<studentAdapter.MyVH> {
         Student data;
         public MyVH(@NonNull View itemView) {
             super(itemView);
-            textViewName=itemView.findViewById(R.id.studentName);
-            textViewRoll=itemView.findViewById(R.id.studentRoll);
-            textViewClass=itemView.findViewById(R.id.studentClass);
-            student_image=itemView.findViewById(R.id.imageView);
+           textViewName=itemView.findViewById(R.id.textViewFriendName);
+           textViewRoll=itemView.findViewById(R.id.textViewDate);
+           textViewClass=itemView.findViewById(R.id.textViewCity);
+           student_image=itemView.findViewById(R.id.imageViewFriendPicture);
 
         }
     }

@@ -2,8 +2,11 @@ package com.example.hifzdiary;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "coursedb";
@@ -69,6 +72,37 @@ public class DBHandler extends SQLiteOpenHelper {
         // at last we are closing our
         // database after adding database.
         db.close();
+    }
+
+    public ArrayList<Student>getStudents(){
+        ArrayList<Student>students=new ArrayList<>();
+
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        //String query="SELECT * FROM "+TABLE_NAME;
+
+        Cursor c = db.rawQuery("SELECT * FROM "+ TABLE_NAME, null);
+
+        Student temp_st;
+        if (c.moveToFirst()){
+            do {
+                // Passing values
+                int id=c.getInt(0);
+                String name=c.getString(1);
+                String clas=c.getString(2);
+                String roll=c.getString(3);
+
+                temp_st=new Student(id,name,clas,roll,R.drawable.d);
+
+                students.add(temp_st);
+
+                // Do something Here with values
+            } while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+
+        return students;
     }
 
     @Override
