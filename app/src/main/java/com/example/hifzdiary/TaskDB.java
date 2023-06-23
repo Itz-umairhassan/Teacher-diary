@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class TaskDB extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     // below variable is for our table name.
-    private static final String TABLE_NAME = "students";
+    private static final String TABLE_NAME = "tasks";
 
     // below variable is for our id column.
     private static final String ID_COL = "id";
@@ -23,11 +24,9 @@ public class TaskDB extends SQLiteOpenHelper {
     // below variable is for our student name column
     private static final String NAME_COL = "name";
 
-    // below variable is for our class column.
-    private static final String CLASS_COL = "class";
-
-    // variable for roll number column
-    private static  final String ROLL_COL="roll";
+    private static  final String SABAQ="sabaq";
+    private static  final String SABQI="sabqi";
+    private static  final String MANZIL="manzil";
 
     // creating a constructor for our database handler.
     public TaskDB(Context context) {
@@ -41,69 +40,35 @@ public class TaskDB extends SQLiteOpenHelper {
         String query = "CREATE TABLE " + TABLE_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME_COL + " TEXT,"
-                + CLASS_COL + " TEXT,"
-                + ROLL_COL + " TEXT)";
+                + SABAQ + " TEXT,"
+                +SABQI+"INTEGER,"
+                +MANZIL+"INTEGER)";
 
         db.execSQL(query);
     }
 
-    // this method is use to add new course to our sqlite database.
-    public void addNewStudent(String studentName, String studentRoll,String studentClass) {
-
-        // on below line we are creating a variable for
-        // our sqlite database and calling writable method
-        // as we are writing data in our database.
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // on below line we are creating a
-        // variable for content values.
-        ContentValues values = new ContentValues();
-
-        // on below line we are passing all values
-        // along with its key and value pair.
-        values.put(NAME_COL, studentName);
-        values.put(CLASS_COL,studentClass);
-        values.put(ROLL_COL,studentRoll);
-
-        // after adding all values we are passing
-        // content values to our table.
-        db.insert(TABLE_NAME, null, values);
-
-        // at last we are closing our
-        // database after adding database.
-        db.close();
-    }
-
-    public ArrayList<Student>getStudents(){
-        ArrayList<Student>students=new ArrayList<>();
-
+   public Task getTask(int id){
         SQLiteDatabase db=this.getReadableDatabase();
 
-        //String query="SELECT * FROM "+TABLE_NAME;
+        Cursor c = db.rawQuery("SELECT * FROM "+ TABLE_NAME+" WHERE "+ID_COL+" = "+id, null);
 
-        Cursor c = db.rawQuery("SELECT * FROM "+ TABLE_NAME, null);
-
-        Student temp_st;
+        Task tsk=null;
         if (c.moveToFirst()){
-            do {
-                // Passing values
-                int id=c.getInt(0);
-                String name=c.getString(1);
-                String clas=c.getString(2);
-                String roll=c.getString(3);
+            int iid=c.getInt(1);
+            String name=c.getString(2);
+            String sabaq=c.getString(3);
+            int sabqi=c.getInt(4);
+            int manzil=c.getInt(5);
 
-                temp_st=new Student(id,name,clas,roll,R.drawable.d);
-
-                students.add(temp_st);
-
-                // Do something Here with values
-            } while(c.moveToNext());
+            tsk=new Task(iid,name,sabaq,sabqi,manzil);
         }
         c.close();
         db.close();
 
-        return students;
+        return tsk;
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
