@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class studentAdapter extends RecyclerView.Adapter<studentAdapter.MyVH> {
@@ -49,7 +50,9 @@ public class studentAdapter extends RecyclerView.Adapter<studentAdapter.MyVH> {
            @Override
            public void onClick(View view) {
                Intent intent=new Intent(context,EachStudent.class);
+               intent.putExtra("name",holder.data.getStudent_name());
                intent.putExtra("id",""+holder.data.getId());
+
                context.startActivity(intent);
            }
        });

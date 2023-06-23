@@ -31,10 +31,6 @@ public class ViewStudent extends AppCompatActivity {
 
             studenDB=new DBHandler(ViewStudent.this);
 
-            Student s1=new Student(0,"umair","3456","first",R.drawable.d);
-            Student s2=new Student(0,"umair2.0","3456","first",R.drawable.d);
-
-           //ll.add(s1);ll.add(s2);
           //  ll.addAll(Arrays.asList(new Student()[]{s1,s2}));
             /*Toast.makeText(this, "Ok i am view student", Toast.LENGTH_SHORT).show();*/
 

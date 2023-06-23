@@ -2,12 +2,14 @@ package com.example.hifzdiary;
 
 public class Task {
     private int id;
+    private int st_id;
     private String name;
     private String sabaq;
     private int sabqi,manzil;
 
-    public Task(int id,String name,String sabaq,int sabqi,int manzil){
+    public Task(int id,int st_id,String name,String sabaq,int sabqi,int manzil){
         this.id=id;
+        this.st_id=st_id;
         this.name=name;
         this.sabaq=sabaq;
         this.sabqi=sabqi;
@@ -20,6 +22,14 @@ public class Task {
 
     public int getId() {
         return id;
+    }
+
+    public void setSt_id(int st_id) {
+        this.st_id = st_id;
+    }
+
+    public int getSt_id() {
+        return st_id;
     }
 
     public void setName(String name) {
