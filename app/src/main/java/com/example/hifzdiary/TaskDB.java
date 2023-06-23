@@ -102,7 +102,7 @@ public class TaskDB extends SQLiteOpenHelper {
 
         //Cursor c= db.rawQuery("SELECT * FROM "+ TABLE_NAME+" WHERE "+ID_COL+" = "+id, null);
         Boolean ff=false;
-       Task tsk = null;
+       Task tsk;
             SQLiteDatabase db=this.getReadableDatabase();
             String upid=""+id;
              Cursor c = db.rawQuery("SELECT * FROM "+ TABLE_NAME+" WHERE stid='"+id+"'", null);
@@ -115,18 +115,46 @@ public class TaskDB extends SQLiteOpenHelper {
                 int manzil = c.getInt(6);
 
                 ff=true;
-                tsk = new Task(iid,id, name, sabaq, sabqi, manzil);
+                Task tski = new Task(iid,id, name, sabaq, sabqi, manzil);
+                c.close();db.close();
+                return tski;
 
             }else{
                 insert_new(name1,id);
-                tsk=get_new(name1,id);
+               Task tskk=get_new(name1,id);
+                c.close();db.close();
+                return tskk;
             }
 
-       c.close();
-       db.close();
-        return tsk;
     }
-    
+
+    public String[] get_next_sabaq(String current_sabaq){
+        String[]arr=current_sabaq.split(":");
+        int para=Integer.parseInt(arr[0]);
+
+        String[]ans=new String[2];
+        if(para==30){
+            ans[0]="-1";
+            ans[1]="-1";
+            return  ans;
+        }
+
+        ans[0]=""+para;
+        ans[1]=""+(para+1);
+        return ans;
+
+    }
+    public void next_task(String name,int id){
+        SQLiteDatabase db=this.getWritableDatabase();
+
+        Task tsk=this.getTask(name,id);
+
+        String[] next_sabaq=get_next_sabaq(tsk.getSabaq());
+        if(next_sabaq[0].equals("-1")) return;
+
+        db.execSQL("UPDATE "+DB_NAME+" SET "+SABAQ+" = '"+next_sabaq+"' WHERE stid='"+id+"'");
+
+    }
 
 
     @Override
