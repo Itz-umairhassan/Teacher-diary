@@ -41,15 +41,15 @@ public class ViewStudent extends AppCompatActivity {
             ll=studenDB.getStudents();
 
             recyclerView=findViewById(R.id.recylerViewStudent);
-
-            recyclerView.addOnItemTouchListener(new Re);
             recyclerView.setHasFixedSize(true);
+
 
             layoutManager=new LinearLayoutManager(ViewStudent.this);
             recyclerView.setLayoutManager(layoutManager);
 
             adapter=new studentAdapter(ll);
             recyclerView.setAdapter(adapter);
+
 
         }catch(Exception ex){
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();

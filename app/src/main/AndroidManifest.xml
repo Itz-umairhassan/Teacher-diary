@@ -12,6 +12,9 @@
         android:theme="@style/Theme.HifzDiary"
         tools:targetApi="31">
         <activity
+            android:name=".EachStudent"
+            android:exported="false" />
+        <activity
             android:name=".ViewStudent"
             android:exported="false" />
         <activity
